@@ -1,0 +1,46 @@
+#!/bin/bash
+
+# *** MODIFY INPUTS HERE ***
+
+# NPT or efield (y/n)
+NPT=y
+
+# Simulation time (ns)
+SIMTIME=20
+# Pressure (bar)
+PRESSURE=1.0
+# Temperature (K)
+TEMPERATURE=300
+# Electric Field (V/nm)
+EFIELD=0.0
+# Replicates
+REP=1
+
+# Slurm settings
+SUBMIT=sbatch
+TIME=06:00:00
+PART=v100
+GPU=v100
+ACC=sarupria
+
+# *** END INPUTS ***
+
+if [ $NPT == "y" ]; then
+    PATH_NAME=run_${SIMTIME}ns_${PRESSURE}bar_${TEMPERATURE}K_
+else
+    PATH_NAME=run_${SIMTIME}ns_${PRESSURE}bar_${TEMPERATURE}K_${EFIELD}V_
+fi
+
+for i in $(seq 1 $REP); do
+    cd ${PATH_NAME}${i}
+    if [ $SUBMIT == "sbatch" ]; then
+	if [ $GPU == "no" ]; then
+	    sbatch --time=${TIME} --partition=${PART} -A ${ACC} --job-name=${PATH_NAME} run_md.sh $NPT
+	else
+            sbatch --time=${TIME} --partition=${PART} --gres=gpu:${GPU}:1 -A ${ACC} --job-name=${PATH_NAME} run_md.sh $NPT
+    	fi
+    else
+        bash run_md.sh $NPT
+    fi
+    cd ..
+done

@@ -1,0 +1,7 @@
+
+
+[ bondtypes ]
+; i    j    func    b0       k0
+
+[ angletypes ]
+; i    j    k    func      th0      cth     
