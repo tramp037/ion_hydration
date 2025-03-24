@@ -8,37 +8,45 @@ for i in "${N_AN[@]}"; do
     NION=$((NION + i))
 done
 
+# name the simulation path
+WATERSTRING=${N_SOL}SOL
+if [ "$NION" -eq 0 ]; then
+    HEADPATH=${MPATH}${WATERMODEL}/"$WATERSTRING"/
+    WATER=y
+else
+    ANSTRING=""
+    for i in "${!N_AN[@]}"; do
+        if [ "${N_AN[$i]}" -ne 0 ]; then
+            ANSTRING="${ANSTRING}${N_AN[$i]}${ANIONS[$i]}"
+        fi
+    done
+    CATSTRING=""
+    for i in "${!N_CAT[@]}"; do
+        if [ "${N_CAT[$i]}" -ne 0 ]; then
+            CATSTRING="${CATSTRING}${N_CAT[$i]}${CATION[$i]}"
+        fi
+    done
+    HEADPATH=${MPATH}${WATERMODEL}-${IONMODEL}/"$WATERSTRING"_"$ANSTRING"_"$CATSTRING"/
+    WATER=n
+fi
+
 for ((k = START; k < (START + N); k++)); do
-    # name the simulation path
-    WATERSTRING=${N_SOL}SOL
-    if [ "$NION" -eq 0 ]; then
-        if [ "$NPT" == "y" ]; then
-            SIMPATH=${MPATH}${WATERMODEL}/"$WATERSTRING"/run_"$SIM_TIME"ns_"$PRESSURE"bar_"$TEMPERATURE"K_"$k"/
-        else
-            SIMPATH=${MPATH}${WATERMODEL}/"$WATERSTRING"/run_"$SIM_TIME"ns_"$PRESSURE"bar_"$TEMPERATURE"K_"$EFIELD"V_"$k"/
-        fi
-        WATER=y
+    if [ "$NPT" == "y" ]; then
+        SIMPATH=${HEADPATH}run_"$SIM_TIME"ns_"$PRESSURE"bar_"$TEMPERATURE"K_"$k"/
     else
-        ANSTRING=""
-        for i in "${!N_AN[@]}"; do
-            if [ "${N_AN[$i]}" -ne 0 ]; then
-                ANSTRING="${ANSTRING}${N_AN[$i]}${ANIONS[$i]}"
-            fi
-        done
-        CATSTRING=""
-        for i in "${!N_CAT[@]}"; do
-            if [ "${N_CAT[$i]}" -ne 0 ]; then
-                CATSTRING="${CATSTRING}${N_CAT[$i]}${CATION[$i]}"
-            fi
-        done
-        if [ "$NPT" == "y" ]; then
-            SIMPATH=${MPATH}${WATERMODEL}-${IONMODEL}/"$WATERSTRING"_"$ANSTRING"_"$CATSTRING"/run_"$SIM_TIME"ns_"$PRESSURE"bar_"$TEMPERATURE"K_"$k"/
-        else
-            SIMPATH=${MPATH}${WATERMODEL}-${IONMODEL}/"$WATERSTRING"_"$ANSTRING"_"$CATSTRING"/run_"$SIM_TIME"ns_"$PRESSURE"bar_"$TEMPERATURE"K_"$EFIELD"V_"$k"/
-        fi
-        WATER=n
+        SIMPATH=${HEADPATH}run_"$SIM_TIME"ns_"$PRESSURE"bar_"$TEMPERATURE"K_"$EFIELD"V_"$k"/
     fi
     echo "Beginning simulation setup: ${SIMPATH}"
+    
+    if [ "$NPT" != "y" ]; then
+        if [ -f "${HEADPATH}"boxlen.dat ]; then
+            BOX_LEN=$(cat "${HEADPATH}"boxlen.dat)
+        else
+            echo "Box length file not found: ${HEADPATH}boxlen.dat"
+            exit 1
+        fi
+    fi
+    echo "Box length: ${BOX_LEN} nm"
 
     # check if SIMPATH exists and if not, create the SIMPATH directory and all parent directories if it doesn't exist
     if [ -d "${SIMPATH}" ]; then
@@ -88,7 +96,7 @@ for ((k = START; k < (START + N); k++)); do
     N_AN_LIST="${N_AN_LIST}]"
 
     python3 -c 'import gro_io; gro_io.ion_box("'${SIMPATH}'",['${BOX_LEN}','${BOX_LEN}','${BOX_LEN}'],'${CAT_LIST}','${AN_LIST}','${N_CAT_LIST}','${N_AN_LIST}',test_n='${k}')'
-    gmx solvate -cs "${MPATH}"forcefield/"${WATERMODEL}".gro -cp ${SIMPATH}ions.gro -o ${NAME} -maxsol "${N_SOL}"
+    gmx solvate -cs "${MPATH}"forcefield/"${WATERMODEL}".gro -cp ${SIMPATH}ions.gro -o ${NAME} -maxsol "${N_SOL}" -scale 0.3
 
     # renumber the atoms and create the index file
     ORDER="["

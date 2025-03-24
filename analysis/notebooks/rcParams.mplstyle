@@ -1,0 +1,30 @@
+axes.titlesize : 24
+axes.labelsize : 22
+lines.linewidth : 2
+lines.markersize : 3
+xtick.labelsize : 18
+ytick.labelsize : 18
+xtick.bottom: True
+ytick.left: True
+xtick.top: True
+ytick.right: True
+
+xtick.direction: in
+ytick.direction: in
+
+xtick.major.size:    10
+xtick.minor.size:    5
+xtick.major.width:    2
+xtick.minor.width:    1
+xtick.minor.visible: True
+
+ytick.major.size:    10
+ytick.minor.size:    5
+ytick.major.width:    2
+ytick.minor.width:    1
+ytick.minor.visible: True
+
+errorbar.capsize: 5
+legend.fontsize: 20
+
+font.family: sans-serif
