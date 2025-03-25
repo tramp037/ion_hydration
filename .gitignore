@@ -181,4 +181,5 @@ cython_debug/
 **/run_*/ions_em.*
 **/run_*/ions_nvt.*
 **/run_*/ions_npt.*
-
+**/run_*/*.sh
+**/run_*/.*
