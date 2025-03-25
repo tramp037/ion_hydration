@@ -1,0 +1,12 @@
+#include "/scratch.global/tramp037/ion_hydration/simulations/forcefield/ffSPCE-Dang.itp"
+
+
+[ system ]
+; Name
+Ions in water
+
+[ molecules ]
+; Compound        nmols
+Cs                 1
+Cl                 1
+SOL                555
