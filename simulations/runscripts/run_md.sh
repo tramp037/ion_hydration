@@ -9,11 +9,13 @@ export OMP_NUM_THREADS=4
 
 NPT=$1
 
-# running energy minimization
-gmx grompp -f minim.mdp -c ion_solv.gro -p topol.top -n index.ndx -o ions_em.tpr
-gmx mdrun -deffnm ions_em -ntmpi 1 -ntomp 4
+if [ ! -f ions_em.gro ]; then
+    # running energy minimization
+    gmx grompp -f minim.mdp -c ion_solv.gro -p topol.top -n index.ndx -o ions_em.tpr
+    gmx mdrun -deffnm ions_em -ntmpi 1 -ntomp 4
 
-rm *step*
+    rm *step*
+fi
 
 # check to see if the energy minimization was successful
 if [ ! -f ions_em.gro ]; then
@@ -59,7 +61,7 @@ if [ $NPT == "y" ]; then
 else
 
     # running production MD
-    gmx grompp -f md_efield.mdp -c ions_npt.gro -p topol.top -n index.ndx -o ions_md.tpr
+    gmx grompp -f md_efield.mdp -c ions_nvt.gro -p topol.top -n index.ndx -o ions_md.tpr
     gmx mdrun -deffnm ions_md -ntmpi 1 -ntomp 4
 
     # check to see if the production MD was successful
