@@ -48,7 +48,10 @@ class SolvationOrientation(AnalysisBase):
         self._dict['K'] = [3.57, 5.77]
         self._dict['Rb'] = [3.58, 5.75]
         self._dict['Cs'] = [3.67, 5.84]
+        self._dict['F'] = [3.4, 5.6]
         self._dict['Cl'] = [3.66, 5.97]
+        self._dict['Br'] = [3.8, 6.0]
+        self._dict['I'] = [3.9, 6.1]
         
         # Initialize the orientation matrix
         self.results.orientation = np.zeros((len(self.ions), self.nbins))

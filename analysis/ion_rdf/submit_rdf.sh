@@ -29,20 +29,20 @@ BLOCKS=1
 #CATION2=("water")
 # ANIONS=("Cl")
 #ANIONS=("water")
-CATION=($1)
-ANIONS=("Cl")
+CATION=("Na")
+ANIONS=($1)
 N_CAT=(1)
 N_AN=(1)
 
 # Water model
-WATERMODEL=SPCE
-IONMODEL=Dang
+WATERMODEL=TIP4P2005
+IONMODEL=Madrid2019
 N_SOL=555
 
 # Starting index for naming
-k_0=7
+k_0=1
 # Number of indexes to run
-N=1
+N=16
 # Simulation time (ns)
 SIMTIME=100
 
@@ -50,7 +50,7 @@ TEMPERATURE=300
 PRESSURE=1.0
 EFIELD=0.1
 
-NPT=n
+NPT=y
 
 # step in the simulation process (em, eq, nvt, npt, md)
 PROCESS=md
@@ -78,9 +78,9 @@ for ((k = k_0; k < (k_0 + N); k++)); do
     WATERSTRING=${N_SOL}SOL
     if [ "$NION" -eq 0 ]; then
         if [ "$NPT" == "y" ]; then
-            SIMPATH=${MPATH}${WATERMODEL}/"$WATERSTRING"/run_"$SIMTIME"ns_"$PRESSURE"bar_"$TEMPERATURE"K_"$k"/
+            SIMPATH=${MPATH}${WATERMODEL}/"$WATERSTRING"/"$SIMTIME"ns_"$PRESSURE"bar_"$TEMPERATURE"K/run_"$k"/
         else
-            SIMPATH=${MPATH}${WATERMODEL}/"$WATERSTRING"/run_"$SIMTIME"ns_"$PRESSURE"bar_"$TEMPERATURE"K_"$EFIELD"V_"$k"/
+            SIMPATH=${MPATH}${WATERMODEL}/"$WATERSTRING"/"$SIMTIME"ns_"$PRESSURE"bar_"$TEMPERATURE"K_"$EFIELD"V/run_"$k"/
         fi
         WATER=y
     else
@@ -97,9 +97,9 @@ for ((k = k_0; k < (k_0 + N); k++)); do
             fi
         done
         if [ "$NPT" == "y" ]; then
-            SIMPATH=${MPATH}${WATERMODEL}-${IONMODEL}/"$WATERSTRING"_"$ANSTRING"_"$CATSTRING"/run_"$SIMTIME"ns_"$PRESSURE"bar_"$TEMPERATURE"K_"$k"/
+            SIMPATH=${MPATH}${WATERMODEL}-${IONMODEL}/"$WATERSTRING"_"$ANSTRING"_"$CATSTRING"/"$SIMTIME"ns_"$PRESSURE"bar_"$TEMPERATURE"K/run_"$k"/
         else
-            SIMPATH=${MPATH}${WATERMODEL}-${IONMODEL}/"$WATERSTRING"_"$ANSTRING"_"$CATSTRING"/run_"$SIMTIME"ns_"$PRESSURE"bar_"$TEMPERATURE"K_"$EFIELD"V_"$k"/
+            SIMPATH=${MPATH}${WATERMODEL}-${IONMODEL}/"$WATERSTRING"_"$ANSTRING"_"$CATSTRING"/"$SIMTIME"ns_"$PRESSURE"bar_"$TEMPERATURE"K_"$EFIELD"V/run_"$k"/
         fi
         WATER=n
     fi
