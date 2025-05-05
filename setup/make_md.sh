@@ -27,22 +27,23 @@ else
         fi
     done
     HEADPATH=${MPATH}${WATERMODEL}-${IONMODEL}/"$WATERSTRING"_"$ANSTRING"_"$CATSTRING"/
+    if [ "$NPT" == "y" ]; then
+        NEXTPATH=${HEADPATH}"$SIM_TIME"ns_"$PRESSURE"bar_"$TEMPERATURE"K/
+    else
+        NEXTPATH=${HEADPATH}"$SIM_TIME"ns_"$PRESSURE"bar_"$TEMPERATURE"K_"$EFIELD"V/
+    fi
     WATER=n
 fi
 
 for ((k = START; k < (START + N); k++)); do
-    if [ "$NPT" == "y" ]; then
-        SIMPATH=${HEADPATH}run_"$SIM_TIME"ns_"$PRESSURE"bar_"$TEMPERATURE"K_"$k"/
-    else
-        SIMPATH=${HEADPATH}run_"$SIM_TIME"ns_"$PRESSURE"bar_"$TEMPERATURE"K_"$EFIELD"V_"$k"/
-    fi
+    SIMPATH=${NEXTPATH}run_"$k"/
     echo "Beginning simulation setup: ${SIMPATH}"
     
     if [ "$NPT" != "y" ]; then
-        if [ -f "${HEADPATH}"boxlen.dat ]; then
-            BOX_LEN=$(cat "${HEADPATH}"boxlen.dat)
+        if [ -f ${HEADPATH}"$SIM_TIME"ns_"$PRESSURE"bar_"$TEMPERATURE"K/boxlen.dat ]; then
+            BOX_LEN=$(cat "${HEADPATH}""$SIM_TIME"ns_"$PRESSURE"bar_"$TEMPERATURE"K/boxlen.dat)
         else
-            echo "Box length file not found: ${HEADPATH}boxlen.dat"
+            echo "Box length file not found: ${HEADPATH}"$SIM_TIME"ns_"$PRESSURE"bar_"$TEMPERATURE"K/boxlen.dat"
             exit 1
         fi
     fi
@@ -56,12 +57,14 @@ for ((k = START; k < (START + N); k++)); do
         echo "The folder "${SIMPATH}" has been created."
     fi
 
-    # copy run script if it doesn't exist
-    if [ -f "${SIMPATH}/../md_replicates.sh" ]; then
-        echo "The file "${SIMPATH}"/../md_replicates.sh already exists."
+    cp "${MPATH}"runscripts/md_replicates.sh "${NEXTPATH}"
+    sed -i "s/!COMPONENTS!/"$WATERSTRING"_"$ANSTRING"_"$CATSTRING"/g" ${NEXTPATH}md_replicates.sh
+    if [ "$NPT" == "y" ]; then
+        sed -i "s/!EFIELD!/_/g" ${NEXTPATH}md_replicates.sh
+        sed -i "s/!NPT!/y/g" ${NEXTPATH}md_replicates.sh
     else
-        cp "${MPATH}"runscripts/md_replicates.sh "${SIMPATH}"/..
-        echo "The file "${SIMPATH}"/../md_replicates.sh has been created."
+        sed -i "s/!EFIELD!/"${EFIELD}"/g" ${NEXTPATH}md_replicates.sh
+        sed -i "s/!NPT!/n/g" ${NEXTPATH}md_replicates.sh
     fi
 
     # name important files

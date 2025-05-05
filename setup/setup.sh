@@ -16,8 +16,8 @@ EXEC="/home/sarupria/shared/software/load_scripts/load_gromacs-2022.sh"
 # List of cations and anions to simulate
 # CATION1=("Li" "Li" "Li" "Li" "Na" "Na" "Na" "K" "K" "Rb")
 # CATION2=("Na" "K" "Rb" "Cs" "K" "Rb" "Cs" "Rb" "Cs" "Cs")
-CATION=("Na")
-ANIONS=($1)
+CATION=("$1")
+ANIONS=("Cl")
 
 # Water model
 # Currently supported: TIP4P (TIP4P), TIP4P2005 (TIP4P/2005), SPCE (SPC/E)
@@ -40,12 +40,12 @@ PRESSURE=1.0
 # Temperature (K)
 TEMPERATURE=300
 # Electric Field (V/nm)
-EFIELD=0.0
+EFIELD=1.0
 # Simulation time (ns)
 SIM_TIME=100
 
 # NpT?
-NPT=y
+NPT=n
 
 # Starting index for naming
 START=1
