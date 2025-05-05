@@ -183,3 +183,5 @@ cython_debug/
 **/run_*/ions_npt.*
 **/run_*/*.sh
 **/run_*/.*
+
+**/std*
