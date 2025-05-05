@@ -1,0 +1,17 @@
+
+; REFERENCES:
+
+; nbfunc 1 = Lennard-Jones formulation for non-bonded interactions
+; comb-rule 2 = Lorentz-Berthelot combination rules
+; gen-pairs no = 1-4 non-bonded interactions must be explicitly stated in a 
+;   [ pairtypes ] section. For this force field there are no 1-4 non-bonded
+;   interactions, so there are no [ pairtypes ] sections.
+
+[ defaults ]
+; nbfunc	comb-rule	gen-pairs	fudgeLJ	fudgeQQ
+  1		2		no		1.0	1.0
+
+#include "ffnonSPCE-Dang.itp"
+#include "ffbonded.itp"
+#include "SPCE.itp"
+#include "Dang.itp

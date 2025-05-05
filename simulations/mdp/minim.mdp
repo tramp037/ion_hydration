@@ -1,0 +1,19 @@
+; Energy minimization for ion and water system
+
+; Enery Minimization
+integrator      = steep          ; steepest descent algorithm       
+emtol           = 1000.0         ; maximum allowed force on any atom (kJ/mol/nm)        
+emstep          = 0.01           ; initial step-size (nm)
+nsteps          = 50000  
+
+; Neighbor Searching
+cutoff-scheme   = Verlet         ; buffered neighbor searching
+nstlist         = 1              ; frequency to update neighbor list (steps) 
+pbc             = xyz            ; periodic boundary in all directions  
+
+; Electrostatics
+coulombtype     = PME            ; Particle Mesh Ewald for long-range electrostatics
+rcoulomb        = 1.0            ; short-range electrostatic cutoff (nm)
+
+; Van der Waals
+rvdw            = 1.0            ; short-range van der Waals cutoff (nm)

@@ -1,0 +1,13 @@
+[ atomtypes ]
+;name   at.num      mass      charge   ptype        V(sigma)      W(epsilon)
+; TIP4P/2005
+; J. L. F. Abascal, and C. Vega, J. Chem. Phys 123 234505 (2005)
+; http://dx.doi.org/10.1063/1.2121687
+  MW    0    0.00000   -1.1128    D   0.00000e+00  0.000000e+00
+  OW    8   15.99940    0.0000    A   3.15890e-01  7.749080e-01
+  HW    1    1.00784    0.5564    A   0.00000e+00  0.000000e+00
+
+
+[ nonbond_params ]
+; i      j func        V(sigma)      W(epsilon)
+

@@ -1,0 +1,136 @@
+
+[moleculetype]
+; name nrexcl
+Na  1
+
+[atoms]
+; nr type resnr residu atom cgnr charge
+     1     Na      1    Na    Na       1     1.0000     22.9898
+
+#ifdef POSRES_CATION
+; Position restraint for each ion
+[ position_restraints ]
+;  i funct       fcx        fcy        fcz
+   1    1          0          0       1000
+#endif
+
+[moleculetype]
+; name nrexcl
+Cl  1
+
+[atoms]
+; nr type resnr residu atom cgnr charge
+     1     Cl      1    Cl    Cl       1    -1.0000     35.453
+
+#ifdef POSRES_ANION
+; Position restraint for each ion
+[ position_restraints ]
+;  i funct       fcx        fcy        fcz
+   1    1          0          0       1000
+#endif
+
+[moleculetype]
+; name nrexcl
+K   1
+
+[atoms]
+; nr type resnr residu atom cgnr charge
+     1     K       1    K     K        1     1.0000     39.0983
+
+#ifdef POSRES_CATION
+; Position restraint for each ion
+[ position_restraints ]
+;  i funct       fcx        fcy        fcz
+   1    1          0          0       1000
+#endif
+
+[moleculetype]
+; name nrexcl
+Li  1
+
+[atoms]
+; nr type resnr residu atom cgnr charge
+     1     Li      1    Li    Li       1     1.0000     6.94100
+
+#ifdef POSRES_CATION
+; Position restraint for each ion
+[ position_restraints ]
+;  i funct       fcx        fcy        fcz
+   1    1          0          0       1000
+#endif
+
+[moleculetype]
+; name nrexcl
+Rb  1
+
+[atoms]
+; nr type resnr residu atom cgnr charge
+     1     Rb      1    Rb    Rb       1     1.0000     85.4678
+
+#ifdef POSRES_CATION
+; Position restraint for each ion
+[ position_restraints ]
+;  i funct       fcx        fcy        fcz
+   1    1          0          0       1000
+#endif
+
+[moleculetype]
+; name nrexcl
+Cs  1
+
+[atoms]
+; nr type resnr residu atom cgnr charge
+     1     Cs      1    Cs    Cs       1     1.0000     132.90545
+
+#ifdef POSRES_CATION
+; Position restraint for each ion
+[ position_restraints ]
+;  i funct       fcx        fcy        fcz
+   1    1          0          0       1000
+#endif
+
+[moleculetype]
+; name nrexcl
+F  1
+
+[atoms]
+; nr type resnr residu atom cgnr charge
+     1     F      1    F    F       1     -1.0000     18.998403
+
+#ifdef POSRES_ANION
+; Position restraint for each ion
+[ position_restraints ]
+;  i funct       fcx        fcy        fcz
+   1    1          0          0       1000
+#endif
+
+[moleculetype]
+; name nrexcl
+Br  1
+
+[atoms]
+; nr type resnr residu atom cgnr charge
+     1     Br      1    Br    Br       1     -1.0000     79.904
+
+#ifdef POSRES_ANION
+; Position restraint for each ion
+[ position_restraints ]
+;  i funct       fcx        fcy        fcz
+   1    1          0          0       1000
+#endif
+
+[moleculetype]
+; name nrexcl
+I  1
+
+[atoms]
+; nr type resnr residu atom cgnr charge
+     1     I       1    I     I       1      -1.0000     126.90447
+
+#ifdef POSRES_ANION
+; Position restraint for each ion
+[ position_restraints ]
+;  i funct       fcx        fcy        fcz
+   1    1          0          0       1000
+#endif
+

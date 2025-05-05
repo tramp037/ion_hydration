@@ -1,0 +1,9 @@
+[ atomtypes ]
+;name   at.num      mass      charge   ptype        V(sigma)      W(epsilon)
+  OW   8   15.99940   -0.8476    A   3.16600e-01  6.500000e-01
+  HW   1    1.00784    0.4238    A   0.00000e+00  0.000000e+00
+
+
+[ nonbond_params ]
+; i      j func        V(sigma)      W(epsilon)
+
