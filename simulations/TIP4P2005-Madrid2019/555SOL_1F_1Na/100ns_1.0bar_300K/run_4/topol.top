@@ -1,0 +1,12 @@
+#include "/scratch.global/tramp037/ion_hydration/simulations/forcefield/ffTIP4P2005-Madrid2019.itp"
+
+
+[ system ]
+; Name
+Ions in water
+
+[ molecules ]
+; Compound        nmols
+Na                 1
+F                 1
+SOL                555
